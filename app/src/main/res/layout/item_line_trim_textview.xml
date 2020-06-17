@@ -7,7 +7,7 @@
     android:padding="@dimen/inset2x">
 
     <com.example.expandabletextview.shared.ExpandableTextView
-        android:id="@+id/contentText"
+        android:id="@+id/lineContentText"
         style="@style/TextAppearance.AppCompat.Body1"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
@@ -28,7 +28,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/contentText"
+        app:layout_constraintTop_toBottomOf="@id/lineContentText"
         tools:text="Lines count: 3" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

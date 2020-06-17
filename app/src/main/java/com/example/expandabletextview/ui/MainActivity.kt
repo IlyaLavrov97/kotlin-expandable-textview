@@ -1,20 +1,17 @@
-package com.example.expandabletextview
+package com.example.expandabletextview.ui
 
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.example.expandabletextview.shared.TextState
-import com.example.expandabletextview.shared.TextStateChangedListener
+import com.example.expandabletextview.R
+import com.example.expandabletextview.ui.SharedTextDelegates.lengthTrimAdapterDelegate
+import com.example.expandabletextview.ui.SharedTextDelegates.lineTrimAdapterDelegate
 import com.example.expandabletextview.vo.LengthTextVO
 import com.example.expandabletextview.vo.LineTextVO
 import com.example.expandabletextview.vo.TextVO
 import com.hannesdorfmann.adapterdelegates4.ListDelegationAdapter
-import com.hannesdorfmann.adapterdelegates4.dsl.adapterDelegateLayoutContainer
 import kotlinx.android.synthetic.main.activity_main.*
-import kotlinx.android.synthetic.main.item_length_trim_textview.*
-import kotlinx.android.synthetic.main.item_line_trim_textview.*
-import kotlinx.android.synthetic.main.item_line_trim_textview.contentText
 
 class MainActivity : AppCompatActivity() {
 
@@ -51,40 +48,4 @@ class MainActivity : AppCompatActivity() {
     private fun showDetails(textVO: TextVO) {
         Toast.makeText(this, textVO.content, Toast.LENGTH_SHORT).show()
     }
-
-    private fun lengthTrimAdapterDelegate(itemClickedListener: (TextVO) -> Unit) =
-        adapterDelegateLayoutContainer<LengthTextVO, TextVO>(R.layout.item_length_trim_textview) {
-            contentText.setTextStateChangedListener(object : TextStateChangedListener {
-                override fun stateChanged(newState: TextState) {
-                    item.state = newState
-                }
-            })
-            itemView.setOnClickListener {
-                itemClickedListener(item)
-            }
-            bind {
-                lengthInfoTextView.text =
-                    context.getString(R.string.length_format).format(item.length)
-                contentText.setTrimLength(item.length)
-                contentText.setText(item.content, item.state)
-            }
-        }
-
-    private fun lineTrimAdapterDelegate(itemClickedListener: (TextVO) -> Unit) =
-        adapterDelegateLayoutContainer<LineTextVO, TextVO>(R.layout.item_line_trim_textview) {
-            contentText.setTextStateChangedListener(object : TextStateChangedListener {
-                override fun stateChanged(newState: TextState) {
-                    item.state = newState
-                }
-            })
-            itemView.setOnClickListener {
-                itemClickedListener(item)
-            }
-            bind {
-                linesCountTextView.text =
-                    context.getString(R.string.lines_count_format).format(item.lineCount)
-                contentText.setTrimLines(item.lineCount)
-                contentText.setText(item.content, item.state)
-            }
-        }
 }
